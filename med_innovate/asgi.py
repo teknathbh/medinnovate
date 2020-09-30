@@ -1,5 +1,5 @@
 """
-ASGI config for doctovid project.
+ASGI config for med_innovate project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'doctovid.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'med_innovate.settings')
 
 application = get_asgi_application()
