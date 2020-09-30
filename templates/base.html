@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Medinnovate | {% block head_title %}
+        {% endblock head_title %}
+    </title>
+    {% comment %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    {% endcomment %}
+    <!-- Font Awesome -->
+    <link href="{% static 'css/fa.css' %}" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="{% static 'css/mbd5.css' %}" rel="stylesheet" />
+</head>
+
+<body>
+    {% include '_navbar.html' %}
+    <div class="container-fluid" style="min-height:650px">
+        {% block content %}
+        {% endblock content %}
+    </div>
+    </div>
+    {% include '_footer.html' %}
+
+    <!-- MDB -->
+    <script src="{% static 'js/vue.min.js' %}"></script>
+    <script src="{% static 'js/mbd5.js' %}"></script>
+
+</body>
+
+</html>
