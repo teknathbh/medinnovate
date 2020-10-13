@@ -1,0 +1,89 @@
+#header {
+    height: auto;
+    background: #261F44;
+    color: aliceblue;
+}
+
+#branding h1 {
+    color: aliceblue;
+}
+
+a:link,
+a:visited {
+    color: #261F44;
+}
+
+
+div.breadcrumbs {
+    background: #FF5938;
+    color: aliceblue;
+}
+
+div.breadcrumbs a {
+    color: #333;
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+    background: #FF5938;
+}
+
+.button,
+input[type=submit],
+input[type=button],
+.submit-row input,
+a.button {
+    background: #261F44;
+    color: aliceblue;
+    transition: 0.1s ease-in;
+}
+
+.button:active,
+input[type=submit]:active,
+input[type=button]:active,
+.button:focus,
+input[type=submit]:focus,
+input[type=button]:focus,
+.button:hover,
+input[type=submit]:hover,
+input[type=button]:hover {
+    background: #251c4d;
+    transform: scale(1.05);
+}
+
+
+
+.button.default,
+input[type=submit].default,
+.submit-row input.default {
+    background: #FF5938;
+
+}
+
+.button.default,
+input[type=submit].default,
+.submit-row input.default:hover {
+    background-color: #251c4d;
+}
+
+#nav-sidebar {
+    width: 20%;
+}
+
+.login .submit-row {
+    padding: 1em !important;
+}
+
+.login #container {
+    background: rgb(201, 199, 199) !important;
+    width: 30em !important;
+    height: 23em !important;
+    border-radius: 20px !important;
+    -webkit-box-shadow: 14px 18px 56px 0px rgba(0, 0, 0, 0.75) !important;
+    -moz-box-shadow: 14px 18px 56px 0px rgba(0, 0, 0, 0.75) !important;
+    box-shadow: 14px 18px 56px 0px rgba(0, 0, 0, 0.75) !important;
+
+
+
+}

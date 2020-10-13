@@ -1,10 +1,214 @@
 {% extends 'base.html' %}
 {% block head_title %}
+{% load crispy_forms_tags %}
+{% load static %}
 Home
 
 {% endblock head_title %}
 
 {% block content %}
-<div class="container-fluid mt-2">
-    Content Here</div>
+<div class="bg-dark right-slant-shape pt-lg-16 py-12 pb-lg-0 my-auto">
+    <div class="container">
+        <div class="row d-lg-flex align-items-center ">
+            <div class="col-lg-5 col-lg-5 col-md-6 col-12">
+                <div class="mb-0 mb-lg-8 ">
+                    <h1 class=" text-white mb-3 display-4">
+                        Welcome to <br> Med-Innovate
+                    </h1>
+                    <p class="mb-6 lead">
+                        Our platform is open and free for everyone looking for general treatment
+                        &amp; queries.
+                    </p>
+                    <a href="{% url 'doctors' %}"><button class="btn btn-primary mr-3">Get a doctor</button></a>
+                </div>
+            </div>
+            <div class="offset-xl-2 col-xl-5 offset-lg-1 col-lg-5 col-md-6 col-12 mb-n2 d-none d-md-block">
+                <div class="position-relative z-index-1">
+                    <img src="{% static 'img/heydoc.jpg' %}" alt=""
+                        class="img-fluid rounded w-100 border-bottom border-bottom-4 border-primary">
+                    <div class="card-img-overlay d-flex flex-column justify-content-end p-4 ">
+                        <h4 class="mb-0 h2">Dr. Ram Sharma</h4>
+                        <span style="background-color:rgba(255,255,255,0.7)" class="text-center font-12">Internationally
+                            acclaimed
+                            doctor</span>
+                    </div>
+                </div>
+                <div class="position-relative z-index-1">
+                    <div class=" position-absolute ml-n14 mt-n7">
+                        <img src="{% static 'img/shape.svg' %}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="py-lg-12 py-8">
+    <div class="container">
+        <div class="mb-9">
+            {% if doctors %}
+            <div class="row align-items-center">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                    <h2 class="h1">Our honorable doctors.</h2>
+                </div>
+                <div class=" col-xl-6 col-lg-6 col-md-6 col-12">
+                    <p class="lead">
+                        No need to get out of home for general inquiry. How awesome?
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- thumbnail -->
+            <div class="row">
+
+                {% for doc in doctors %}
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="card border-0">
+                        <a href="../pages/program-single.html" class="img-zoom">
+                            <img class="rounded img-fluid w-100" src="{% static 'img/doc1.jpg' %}" alt="">
+                        </a>
+                    </div>
+                    <div class="card border-0">
+                        <div class="card-body mt-n13 bg-white mr-6 rounded-right p-4">
+                            <a href="../pages/program-single.html">
+                                <h3 class="mb-3">{{doc.name}}</h3>
+                            </a>
+                            <p>
+                                {{doc.description}}
+                            </p>
+                            <a href="../pages/program-single.html" class="btn-primary-link">Have a talk</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <h2 class="mb-3">No Doctors Found</h2>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class=" pt-lg-10 pb-lg-12 py-8">
+    <div class="container">
+        <div class="row">
+            <div class="offset-lg-2 col-lg-8 col-md-12 col-12">
+                <div class="mb-8 text-center">
+                    <h2 class="h1">Read. Listend. Download</h2>
+                    <p class="lead">Get started now with insights and strategies from The Coach</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-12">
+                <div class="card mb-lg-0 mb-4">
+                    <div class="card-body p-5">
+                        <div class="mb-4">
+                            <i
+                                class="fas fa-newspaper text-secondary bg-light-secondary icon-shape icon-xl rounded-circle font-22"></i>
+                        </div>
+                        <h4>Blog</h4>
+                        <p>Read my blog daily basis and latest article inspire you.</p>
+                        <a href="#" class="btn-primary-link">Read more</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-12">
+                <div class="card mb-lg-0 mb-4">
+                    <div class="card-body p-5">
+                        <div class="mb-4">
+                            <i
+                                class="fas fa-podcast text-info bg-light-info icon-shape icon-xl rounded-circle font-22"></i>
+                        </div>
+                        <h4>Podcast</h4>
+                        <p>
+                            Listen my podcast daily basic and also, get latest podcast fast.
+                        </p>
+                        <a href="#" class="btn-primary-link">Read more</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-12 d-md-none d-lg-block">
+                <div class="card mb-lg-0 mb-4">
+                    <div class="card-body p-5">
+                        <div class="mb-4">
+                            <i
+                                class="fas fa-download text-danger bg-light-danger icon-shape icon-xl rounded-circle font-22"></i>
+                        </div>
+                        <h4>Resources</h4>
+                        <p>Download free resources and books for your reading,</p>
+                        <a href="#" class="btn-primary-link">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-shape bg-cover bg-dark" id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="offset-lg-2 col-lg-8 col-md-12 col-12">
+                <div class="text-center py-lg-16 py-12">
+                    <h1 class="mb-3 display-4 text-white">Get Connected</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pb-0">
+    <div class="container">
+        <div class="row">
+            <div class="offset-lg-2 col-lg-8 col-md-12 col-12">
+                <div class="card mt-n12 text-center mb-12">
+                    <div class="card-body p-4 p-lg-8">
+                        <div class="mb-5">
+                            <h2 class="mb-3">We love Hearing From You</h2>
+                            <p>
+                                If you have any suggestions, please fill out this form. We
+                                will <br />find you and get in touch.
+                            </p>
+                        </div>
+                        <form class="row">
+                            <div class="from-group col-md-6 col-12 mb-3">
+                                <label for="fname" class="sr-only">First Name</label>
+                                <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname"
+                                    required="" />
+                            </div>
+                            <div class="from-group col-md-6 col-12 mb-3">
+                                <label for="lname" class="sr-only">Last Name</label>
+                                <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname"
+                                    required="" />
+                            </div>
+                            <div class="from-group col-12 mb-3">
+                                <label for="email" class="sr-only"> Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="Email" name="email"
+                                    required="" />
+                            </div>
+                            <div class="mb-3 col-12 mb-3">
+                                <label for="purpose" class="sr-only">Purpose</label>
+                                <select class="form-select" id="purpose">
+                                    <option selected="">Select Purpose</option>
+                                    <option value="1">Business Coaching</option>
+                                    <option value="2">Relationship</option>
+                                    <option value="3">Lifecoaching</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    Send Messages
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 {% endblock content %}

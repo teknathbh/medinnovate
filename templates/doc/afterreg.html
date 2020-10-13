@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block head_title %}
+{% load crispy_forms_tags %}
+{% load static %}
+Hello {{user.username}}
+
+{% endblock head_title %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h4>Thanks. Your registration was successful. Please come back tomorrow. Till then, we will verify your
+        credentials.😊</h4>
+</div>
+
+{% endblock %}

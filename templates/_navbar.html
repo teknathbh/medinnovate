@@ -1,6 +1,6 @@
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-5">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Naam sochdai</a>
+            <a class="navbar-brand" href="{% url 'index' %}">Med-Innovate</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -8,34 +8,49 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Another link</a>
+                        <a class="nav-link" href="{% url 'about'%}">About Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Khai ke ho?</a>
+                        <a class="nav-link" href="{% url 'index' %}#contact">Contact</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                            data-toggle="dropdown" aria-expanded="false">
-                            JSKSBJKS
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
+
                 </ul>
                 <ul class="navbar-nav ml-auto">
+
+                    {% if user.is_authenticated %}
+
+                    {% if user.doctor %}
+                    <li class="nav-item mr-2"><a class="btn btn-outline-info" href="{% url 'account_logout' %}">My
+                            Patients</a></li>
+                    {% elif user.people %}
+                    <li class="nav-item dropdown mr-2">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-toggle="dropdown" aria-expanded="false">
+                            Dashboard
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">My Queries</a></li>
+                            <li><a class="dropdown-item" href="#">My Reports</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+
+                    <li><a class="btn btn-outline-danger" href="{% url 'account_logout' %}">Logout </a></li>
+
+                    {% else %}
                     <li class="nav-item">
-                        <a class="btn btn-primary mr-2 mt-1" aria-current="page" href="{% url 'account_signup' %}">Sign
+                        <a class="btn btn-primary mr-2 mt-1 btn-lg" aria-current="page"
+                            href="{% url 'account_signup' %}">Sign
                             Up</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-success mt-1" aria-current="page" href="{% url 'account_login' %}">Login</a>
+                        <a class="btn btn-success mt-1 btn-lg" aria-current="page" href="{% url 'account_login' %}">Sign
+                            In</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
