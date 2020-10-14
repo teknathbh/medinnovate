@@ -10,5 +10,7 @@ urlpatterns = [
          views.doctorform, name="doctorform"),
     path('profileform/djnjdnejsjsjhbkyuswbcbvfjyebviubewb72t367dw3jhbhwc?ks=pp',
          views.personform, name="personform"),
-    path("doctors/", views.doctors, name="doctors")
+    path("doctors/", views.doctors, name="doctors"),
+    path("doctors/<int:id>", views.doctor, name="doctor"),
+    path('inquiries/',views.inquiries, name="inquiries")
 ]

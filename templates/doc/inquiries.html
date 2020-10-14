@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+{% block head_title %}
+Inquiries
+{% endblock head_title %}
+
+{% block content %}
+
+<div style="margin-top:5%; " class="col-md-6 offset-md-3">
+    <div class="card bg-transparent">
+        <div class="card-header bg-transparent p-3">
+            <h4 class="mb-0 h5">{% if inquiries %} {{len}} {% if len is 1 %}Query {% else %}Queries{% endif %}
+                {% else %}
+                No Queries{% endif %}</h4>
+        </div>
+        <div class="card-body">
+            <div class="d-flex">
+                <img src="../assets/images/avatar-2.png" alt="" class="avatar-lg rounded-circle mr-3">
+                <div class="">
+                    <div class="mb-2">
+                        <h5 class=" mb-0">Aubrey Wilson</h5>
+                        <small>December 31, 2020 12:47 PM</small>
+                    </div>
+                    <p>Donec ullamcorper maximus ie aliquam vmentume.</p>
+                    <a href="#" class="btn-primary-link">Reply</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body border-top">
+            <div class="d-flex">
+                <img src="../assets/images/avatar-3.png" alt="" class="avatar-lg rounded-circle mr-3">
+                <div class="">
+                    <div class="mb-2">
+                        <h5 class=" mb-0">Morris Nguyen</h5>
+                        <small>December 31, 2020 12:00 PM</small>
+                    </div>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Cras sollicitudin, tellus vitae condimentum egestas,
+                        libero dolor auctor tellus, eu consectetur neque elit
+                        quis nunc.
+                    </p>
+                    <a href="#" class="btn-primary-link">Reply</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

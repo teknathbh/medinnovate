@@ -25,17 +25,13 @@ class InquiryForm(forms.ModelForm):
 
     class Meta:
         model = Inquiry
-        fields = ('doctor', 'message', 'past_data', )
+        fields = ('message', 'past_data', 'reference_file_1',
+                  'reference_file_2', 'reference_file_3', )
         widgets = {
-            'doctor': forms.TextInput(attrs={'disabled': 'disabled'}),
-            'past_data': forms.ClearableFileInput(attrs={'multiple': True}),
             'message': forms.Textarea(attrs={'style': 'height:30px;'}),
         }
         labels = {
-            'past_data': 'Past reports or prescriptions'
-        }
-        help_texts = {
-            'past_data': 'Can Choose Multiple',
+            'past_data': 'Related reports or prescriptions'
         }
 
 

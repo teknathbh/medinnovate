@@ -23,8 +23,8 @@
                     {% if user.is_authenticated %}
 
                     {% if user.doctor %}
-                    <li class="nav-item mr-2"><a class="btn btn-outline-info" href="{% url 'account_logout' %}">My
-                            Patients</a></li>
+                    <li class="nav-item mr-2"><a class="btn btn-outline-info" href="{% url 'inquiries' %}">Inquiries</a>
+                    </li>
                     {% elif user.people %}
                     <li class="nav-item dropdown mr-2">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"

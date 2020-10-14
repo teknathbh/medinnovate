@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+{% block head_title %}
+{{doctor.name}}
+{% endblock head_title %}
+
+{% block content %}
+
+
+<div class="container mt-9">
+    <div class="row align-items-center">
+        <!-- image -->
+        <div class="col-lg-4 col-md-4 col-12">
+            <img src="{{doctor.image.url}}" alt="" class="img-fluid" />
+        </div>
+        <!-- description -->
+        <div class="offset-lg-1 col-lg-7 col-md-8 col-12">
+            <h2>{{doctor.name}}</h2>
+            <p>Specialization: <span class="text-primary"> {{doctor.field_of_expertise}}</span></p>
+
+            <hr class="my-4" />
+            <div class="mb-3 font-20">
+                Estimated response time: 10 hours
+            </div>
+            <button data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-success mr-2"
+                {% if inquiry %}disabled{% endif %}>{% if inquiry %}Already inquired {% else %} Have a
+                talk{% endif %}</button>
+            <p class="mt-4 font-14 mb-1">
+                <span class="text-dark mr-1">Address:</span> {{doctor.address}}
+            </p>
+            <p class="font-14">
+                <span class="text-dark mr-1">Places willing to work:</span>{{doctor.tags}}
+            </p>
+        </div>
+    </div>
+    <hr class="my-5" />
+    <div>
+        <p>
+            {{doctor.description}}
+        </p>
+    </div>
+</div>
+
+{% comment %} Model {% endcomment %}
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Have a talk</h5>
+                <button type="button" class="btn btn-danger-soft" data-dismiss="modal" aria-label="Close">X</button>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {{form | crispy}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

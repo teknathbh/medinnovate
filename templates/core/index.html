@@ -64,19 +64,19 @@ Home
                 {% for doc in doctors %}
                 <div class="col-lg-4 col-md-6 col-12">
                     <div class="card border-0">
-                        <a href="../pages/program-single.html" class="img-zoom">
-                            <img class="rounded img-fluid w-100" src="{% static 'img/doc1.jpg' %}" alt="">
+                        <a href="{% url 'doctor' id=doc.id %}" class="img-zoom">
+                            <img class="rounded img-fluid w-100" src="{{doc.image.url}}" alt="">
                         </a>
                     </div>
                     <div class="card border-0">
                         <div class="card-body mt-n13 bg-white mr-6 rounded-right p-4">
-                            <a href="../pages/program-single.html">
+                            <a href="{% url 'doctor' id=doc.id %}">
                                 <h3 class="mb-3">{{doc.name}}</h3>
                             </a>
                             <p>
-                                {{doc.description}}
+                                Field of expertise: {{doc.field_of_expertise}}
                             </p>
-                            <a href="../pages/program-single.html" class="btn-primary-link">Have a talk</a>
+                            <a href="{% url 'doctor' id=doc.id %}" class="btn-primary-link">Have a talk</a>
                         </div>
                     </div>
                 </div>
