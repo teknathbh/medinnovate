@@ -25,8 +25,8 @@
                 Estimated response time: 10 hours
             </div>
             <button data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-success mr-2"
-                {% if inquiry %}disabled{% endif %}>{% if inquiry %}Already inquired {% else %} Have a
-                talk{% endif %}</button>
+                {% for inquiry in inquiry %}{% if inquiry and not inquiry.report %}disabled{% endif %}{% endfor %}>Have
+                a talk</button>
             <p class="mt-4 font-14 mb-1">
                 <span class="text-dark mr-1">Address:</span> {{doctor.address}}
             </p>

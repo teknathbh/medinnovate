@@ -14,3 +14,4 @@ class PersonAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Inquiry)
+admin.site.register(Report)

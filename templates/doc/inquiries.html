@@ -8,44 +8,122 @@ Inquiries
 
 {% block content %}
 
-<div style="margin-top:5%; " class="col-md-6 offset-md-3">
-    <div class="card bg-transparent">
+<div style="margin-top:5%; " class="container mb-5">
+    <div class="card bg-transparent shadow-lg">
         <div class="card-header bg-transparent p-3">
             <h4 class="mb-0 h5">{% if inquiries %} {{len}} {% if len is 1 %}Query {% else %}Queries{% endif %}
                 {% else %}
                 No Queries{% endif %}</h4>
         </div>
+
+        {% for query in inquiries %}
+
+        {% if not query.report %}
         <div class="card-body">
             <div class="d-flex">
-                <img src="../assets/images/avatar-2.png" alt="" class="avatar-lg rounded-circle mr-3">
+
                 <div class="">
                     <div class="mb-2">
-                        <h5 class=" mb-0">Aubrey Wilson</h5>
-                        <small>December 31, 2020 12:47 PM</small>
+                        <h5 class=" mb-0">{{query.inquiry_by}}</h5>
+                        <small>For more questions: <span
+                                class="text-primary">{{query.inquiry_by.user.email}}</span></small>
                     </div>
-                    <p>Donec ullamcorper maximus ie aliquam vmentume.</p>
-                    <a href="#" class="btn-primary-link">Reply</a>
+                    <p>{{query.message}}</p>
+                    {% if query.past_data %}
+                    <a target="blank" href="{{query.past_data.url}}" class="btn-primary-link">Past Data</a>
+                    {% endif %}
+                    {% if query.reference_file_1 %}<a target="blank" href="{{query.reference_file_1.url}}"
+                        class="btn-primary-link m-2">Reference File 1</a>{% endif %}
+                    {% if query.reference_file_2 %}<a target="blank" href="{{query.reference_file_2.url}}"
+                        class="btn-primary-link m-2">Reference File 2</a>{% endif %}
+                    {% if query.reference_file_3 %}<a target="blank" href="{{query.reference_file_3.url}}"
+                        class="btn-primary-link m-2">Reference File 3</a>{% endif %}
+                    <button data-toggle="modal" data-target="#exampleModal" data-main="{{query.inquiry_by}}"
+                        class="btn btn-info-soft m-2">Send
+                        Report</button>
+
+
                 </div>
             </div>
         </div>
-        <div class="card-body border-top">
+        <hr>
+        {% endif %}
+        {% endfor %}
+        {% for query in inquiries %}
+        {% if query.report %}
+        <hr>
+        <div class="card-body">
             <div class="d-flex">
-                <img src="../assets/images/avatar-3.png" alt="" class="avatar-lg rounded-circle mr-3">
+
                 <div class="">
                     <div class="mb-2">
-                        <h5 class=" mb-0">Morris Nguyen</h5>
-                        <small>December 31, 2020 12:00 PM</small>
+                        <h5 class=" mb-0">{{query.inquiry_by}}</h5>
+                        <small>Already Reported</small>
                     </div>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Cras sollicitudin, tellus vitae condimentum egestas,
-                        libero dolor auctor tellus, eu consectetur neque elit
-                        quis nunc.
-                    </p>
-                    <a href="#" class="btn-primary-link">Reply</a>
+                    <p>{{query.message}}</p>
+
                 </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button type="button" class="btn btn-danger-soft" data-dismiss="modal" aria-label="Close">X</button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action=''>
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Recipient:</label>
+                        <input disabled type="text" name="patient123" class="form-control" id="patient123">
+                        <input type="hidden" name="patient" class="form-control" id="patient">
+                        <input type="hidden" name="report_by" class="form-control" id="report_by"
+                            value="{{user.doctor.name}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Prescriptions:</label>
+                        <input type="text" placeholder="List separated by comma" name="prescriptions"
+                            class="form-control" id="recipient-prescriptions">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Remarks:</label>
+                        <textarea required class="form-control" name="remarks" id="message-text"></textarea>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Send message</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
+<script>
+    var exampleModal = document.getElementById('exampleModal')
+    exampleModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget
+        var recipient = button.getAttribute('data-main')
+
+        var modalTitle = exampleModal.querySelector('.modal-title')
+        var modalBodyInput = exampleModal.querySelector('#patient123')
+        var modalBodyInputMain = exampleModal.querySelector('#patient')
+
+        modalTitle.textContent = 'New report to ' + recipient
+        modalBodyInput.setAttribute("value", recipient)
+        modalBodyInputMain.setAttribute("value", recipient)
+    })
+</script>
+
 {% endblock %}

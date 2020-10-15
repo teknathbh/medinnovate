@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from . import models, forms
 from .forms import DoctorForm, PersonForm, InquiryForm
-from .models import Person, Inquiry
+from .models import Person, Inquiry, Report
 from taggit.models import Tag
 from django.views.generic.edit import FormView
 from .forms import InquiryForm
 from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mass_mail
+from django.core.mail import send_mass_mail, send_mail
 
 docdb = models.Doctor
 docform = forms.DoctorForm
@@ -96,53 +96,61 @@ def doctors(request):
 
 @login_required
 def doctor(request, id):
-    if request.method == 'POST' or request.method == 'FILES':
-        form = InquiryForm(request.POST, request.FILES)
-        doctor = docdb.objects.get(id=id)
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.doctor = doctor
-            obj.inquiry_by = request.user.person
-            obj.save()
-            message1 = (
-                'New Inquiry',
-                f'''
-                Hello {doctor.name},
-                Inquiry by: {request.user.person},
-                His/Her Email: {request.user.email},
-                Message: {obj.message}
-                Files: http://127.0.0.1:8000{obj.past_data.url}.
-                <h1>Please, login to your portal for more details.</h1>
-                ''',
-                'hello.medinnovate@gmail.com',
-                [doctor.user.email, 'abisamism@gmail.com']
-            )
+    try:
+        if request.user.doctor:
+            return render(request, 'doc/noentry.html')
+    except:
+        if request.method == 'POST' or request.method == 'FILES':
+            form = InquiryForm(request.POST, request.FILES)
+            doctor = docdb.objects.get(id=id)
+            if form.is_valid():
+                obj = form.save(commit=False)
+                obj.doctor = doctor
+                obj.inquiry_by = request.user.person
+                obj.save()
+                if obj.past_data:
+                    file1 = f'Past data: http://127.0.0.1:8000{obj.past_data.url}'
+                else:
+                    file1 = ""
+                message1 = (
+                    'New Inquiry',
+                    f'''
+                    Hello {doctor.name},
+                    Inquiry by: {request.user.person},
+                    His/Her Email: {request.user.email} (please contact this email for further queries),
+                    Message: {obj.message}
+                    {file1}
+                    Please, login to your portal for more details.
+                    ''',
+                    'hello.medinnovate@gmail.com',
+                    [doctor.user.email, ]
+                )
 
-            message2 = (
-                'Inquiry Success',
-                f'''
-                Your inquiry has been sent to {doctor.user.email}
-                Stay tuned for his response.
-                ''',
-                'hello.medinnovate@gmail.com',
-                [request.user.email, ]
-            )
+                message2 = (
+                    'Inquiry Success',
+                    f'''
+                    Your inquiry has been sent to {doctor.name} 
+                    Stay tuned for his/her response or contact at {doctor.user.email}
+                    ''',
+                    'hello.medinnovate@gmail.com',
+                    [request.user.email, ]
+                )
 
-            send_mass_mail((message1, message2), fail_silently=False)
-            return redirect('doctor', id=id)
+                send_mass_mail((message1, message2), fail_silently=False)
+                return redirect('doctor', id=id)
+            else:
+                print(form.errors)
         else:
-            print(form.errors)
-    else:
-        doctor = docdb.objects.get(verified=True, id=id)
-        form = InquiryForm()
-        inquiry = Inquiry.objects.filter(
-            inquiry_by=request.user.person, doctor=id)
-        context = {
-            'doctor': doctor,
-            'form': form,
-            'inquiry': inquiry,
-        }
-        return render(request, 'core/doctor.html', context)
+            doctor = docdb.objects.get(verified=True, id=id)
+            form = InquiryForm()
+            inquiry = Inquiry.objects.filter(
+                inquiry_by=request.user.person, doctor=id)
+            context = {
+                'doctor': doctor,
+                'form': form,
+                'inquiry': inquiry,
+            }
+            return render(request, 'core/doctor.html', context)
 
 
 @login_required
@@ -155,14 +163,57 @@ def profile(request):
 
 @login_required
 def inquiries(request):
-    if request.user.person:
-        return redirect('index')
+    if request.method == "POST":
+        patient = request.POST.get('patient')
+        personn = Person.objects.get(name=patient)
+        inquiries = Inquiry.objects.filter(inquiry_by=personn)
+        len_i = len(inquiries)
+        for inquiry in inquiries:
+            inquiry = inquiries[0]
+        prescriptions = request.POST.get("prescriptions")
+        report_by = request.POST.get("report_by")
+        remarks = request.POST.get("remarks")
+        form = Report(patient=inquiry.inquiry_by.name, inquiry=inquiry, report_by=report_by, remarks=remarks, prescriptions=prescriptions)
+        form.save()
+        send_mail(
+            'Report Recieved',
+            f"""
+            Hello {inquiry.inquiry_by.name}
+            You have a new report from {report_by}. 
+            Please login to see your report.
+            """,
+            'hello.medinnovate@gmail.com',
+            [inquiry.inquiry_by.user.email, ],
+            fail_silently=False,
+        )
+        return redirect("inquiries")
     else:
-        inquiries = Inquiry.objects.filter(doctor=request.user.doctor.id)
-        x = len(inquiries)
-        print(x)
+        if Person.objects.filter(user=request.user):
+            return redirect('index')
+        else:
+            inquiries = Inquiry.objects.filter(doctor=request.user.doctor.id)
+            x = len(inquiries)
+            context = {
+                'inquiries': inquiries,
+                'len': x
+            }
+            return render(request, 'doc/inquiries.html', context)
+
+
+@login_required
+def reports(request):
+    try:
+        if request.user.doctor:
+            return redirect('index')
+    except:
+        inquiries = Inquiry.objects.filter(inquiry_by=request.user.person.id)
         context = {
             'inquiries': inquiries,
-            'len': x
         }
-        return render(request, 'doc/inquiries.html', context)
+        return render(request, 'doc/reports.html', context)
+
+
+@login_required
+def report(request, id):
+    report = Report.objects.get(id=id)
+    return render(request, "doc/report.html", {'report': report})

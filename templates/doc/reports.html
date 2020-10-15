@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+{% block head_title %}
+Reports
+{% endblock head_title %}
+
+{% block content %}
+<div class="container my-5 mt-10">
+    <div class="list-group shadow-lg">
+        {% if inquiries %}
+        {% for q in inquiries %}
+        {% if q.report %}
+        <a href="{% url 'report' id=q.report.id %}" class="active list-group-item list-group-item-action mb-2">Report
+            From:
+            Dr. {{q.report}}</a>
+        {% else %}
+        <a class="list-group-item list-group-item-action mb-2">Report not yet recieved from:
+            Dr. {{q.doctor}}</a>
+        {% endif %}
+        {% endfor %}
+        {% else %}
+        <a class="list-group-item list-group-item-action">No Queries Made</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

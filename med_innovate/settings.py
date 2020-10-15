@@ -83,6 +83,8 @@ DATABASES = {
     }
 }
 
+APPEND_SLASH = True
+
 # Allauth configs
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',

@@ -58,26 +58,30 @@ class Inquiry(models.Model):
         upload_to='files/%Y/%m/%d', null=True, blank=True)
     reference_file_3 = models.FileField(
         upload_to='files/%Y/%m/%d', null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True, null=True)
 
     class Meta:
         verbose_name = "Inquiry"
         verbose_name_plural = "Inquirys"
+        ordering = ['-timestamp']
 
     def __str__(self):
         return self.inquiry_by.name
 
 
 class Report(models.Model):
-    patient = models.CharField(max_length=255)
+    patient = models.CharField(max_length=255, blank=True, null=True)
     inquiry = models.OneToOneField(
         Inquiry, on_delete=models.CASCADE, blank=True)
     report_by = models.CharField(max_length=255)
-    prescriptions = models.CharField(max_length=500)
+    prescriptions = models.CharField(max_length=500, blank=True)
     remarks = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True, null=True)
 
     class Meta:
         verbose_name = "Report"
         verbose_name_plural = "Reports"
+        ordering = ['-timestamp']
 
     def __str__(self):
-        return self.patient
+        return f"{self.report_by} | {self.inquiry.doctor.field_of_expertise}"

@@ -10,11 +10,14 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
                     </li>
+                    {% if user.person %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'about'%}">About Us</a>
+                        <a class="nav-link" href="{% url 'doctors'%}">Doctors</a>
                     </li>
+                    {% endif %}
+
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'index' %}#contact">Contact</a>
+                        <a class="nav-link" href="{% url 'about'%}">Contact</a>
                     </li>
 
                 </ul>
@@ -25,16 +28,8 @@
                     {% if user.doctor %}
                     <li class="nav-item mr-2"><a class="btn btn-outline-info" href="{% url 'inquiries' %}">Inquiries</a>
                     </li>
-                    {% elif user.people %}
-                    <li class="nav-item dropdown mr-2">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                            data-toggle="dropdown" aria-expanded="false">
-                            Dashboard
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">My Queries</a></li>
-                            <li><a class="dropdown-item" href="#">My Reports</a></li>
-                        </ul>
+                    {% elif user.person %}
+                    <li class="nav-item mr-2"><a class="btn btn-outline-info" href="{% url 'reports' %}">Reports</a>
                     </li>
                     {% endif %}
 

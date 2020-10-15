@@ -1,5 +1,67 @@
 {% extends 'base.html' %}
 
 {% block content %}
-About
+
+<div class="bg-shape bg-cover bg-dark" id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="offset-lg-2 col-lg-8 col-md-12 col-12">
+                <div class="text-center py-lg-16 py-12">
+                    <h1 class="mb-3 display-4 text-white">Get Connected</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pb-0">
+    <div class="container">
+        <div class="row">
+            <div class="offset-lg-2 col-lg-8 col-md-12 col-12">
+                <div class="card mt-n12 text-center mb-12">
+                    <div class="card-body p-4 p-lg-8">
+                        <div class="mb-5">
+                            <h2 class="mb-3">We love Hearing From You</h2>
+                            <p>
+                                If you have any suggestions, please fill out this form. We
+                                will <br />find you and get in touch.
+                            </p>
+                        </div>
+                        <form class="row">
+                            <div class="from-group col-md-6 col-12 mb-3">
+                                <label for="fname" class="sr-only">First Name</label>
+                                <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname"
+                                    required="" />
+                            </div>
+                            <div class="from-group col-md-6 col-12 mb-3">
+                                <label for="lname" class="sr-only">Last Name</label>
+                                <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname"
+                                    required="" />
+                            </div>
+                            <div class="from-group col-12 mb-3">
+                                <label for="email" class="sr-only"> Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="Email" name="email"
+                                    required="" />
+                            </div>
+                            <div class="mb-3 col-12 mb-3">
+                                <label for="purpose" class="sr-only">Purpose</label>
+                                <select class="form-select" id="purpose">
+                                    <option selected="">Select Purpose</option>
+                                    <option value="1">Business Coaching</option>
+                                    <option value="2">Relationship</option>
+                                    <option value="3">Lifecoaching</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    Send Messages
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock content %}

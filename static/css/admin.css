@@ -78,7 +78,6 @@ input[type=submit].default,
 .login #container {
     background: rgb(201, 199, 199) !important;
     width: 30em !important;
-    height: 23em !important;
     border-radius: 20px !important;
     -webkit-box-shadow: 14px 18px 56px 0px rgba(0, 0, 0, 0.75) !important;
     -moz-box-shadow: 14px 18px 56px 0px rgba(0, 0, 0, 0.75) !important;
