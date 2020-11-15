@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from . import models, forms
 from .forms import DoctorForm, PersonForm, InquiryForm
-from .models import Person, Inquiry, Report
+from .models import Person, Inquiry, Report, Contact
 from taggit.models import Tag
 from django.views.generic.edit import FormView
 from .forms import InquiryForm
@@ -37,7 +37,39 @@ def index(request):
 
 
 def about(request):
-    return render(request, 'core/about.html')
+    if request.method=="POST":
+        fname = request.POST.get('fname')
+        lname = request.POST.get('lname')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        contact = Contact(fname=fname, lname=lname, email=email, message=message)
+        contact.save()
+        message1 = (
+                    'New Message',
+                    f'''
+                    Hello Aashish,
+                    Inquiry by: {fname},
+                    His/Her Email: {email} (please contact this email for further queries),
+                    Message: {message}
+                    ''',
+                    'hello.medinnovate@gmail.com',
+                    ['hello@awebisam.com',]
+                )
+
+        message2 = (
+            'Message Sent',
+            f'''
+            Hello {fname}
+            Your message has been recieved. Stay tuned for our response or contact at hello@awebisam.com
+            ''',
+            'hello.medinnovate@gmail.com',
+            [email, ]
+        )
+
+        send_mass_mail((message1, message2), fail_silently=False)
+        return redirect('index')
+    else:
+        return render(request, 'core/about.html')
 
 
 @login_required
@@ -123,7 +155,7 @@ def doctor(request, id):
                     Please, login to your portal for more details.
                     ''',
                     'hello.medinnovate@gmail.com',
-                    [doctor.user.email, ]
+                     [doctor.user.email, ]
                 )
 
                 message2 = (

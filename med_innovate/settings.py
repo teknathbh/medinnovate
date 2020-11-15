@@ -130,13 +130,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
 
-# MESSAGE_TAGS = {
+MEDIA_ROOT = BASE_DIR / 'media' # If you use os then do os.path.join(BASE_DIR, 'directoryname')
+
+
+# MESSAGE_TAGS = 
 #     messages.ERROR: 'danger'
 # }
 

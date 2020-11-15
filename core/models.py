@@ -52,12 +52,13 @@ class Inquiry(models.Model):
         Person, null=True, on_delete=models.CASCADE)
     message = models.TextField()
     past_data = models.FileField(upload_to='files/%Y/%m/%d', blank=True)
-    reference_file_1 = models.FileField(
-        upload_to='files/%Y/%m/%d', null=True, blank=True)
-    reference_file_2 = models.FileField(
-        upload_to='files/%Y/%m/%d', null=True, blank=True)
-    reference_file_3 = models.FileField(
-        upload_to='files/%Y/%m/%d', null=True, blank=True)
+    reference_file_1 = models.FileField(upload_to='files/%Y/%m/%d', null=True, blank=True)
+    # Here /files creates a folder named files inside MEDIA_DIR and
+    #  %Y, %m and %d creates Year, Month and Day folders to manage
+
+    # You can also just statically set upload_to="directoryname"
+    reference_file_2 = models.FileField(upload_to='files/%Y/%m/%d', null=True, blank=True)
+    reference_file_3 = models.FileField(upload_to='files/%Y/%m/%d', null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True, null=True)
 
     class Meta:
@@ -85,3 +86,17 @@ class Report(models.Model):
 
     def __str__(self):
         return f"{self.report_by} | {self.inquiry.doctor.field_of_expertise}"
+
+
+class Contact(models.Model):
+    fname = models.CharField(max_length=100)
+    lname = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    message = models.TextField()
+
+    class Meta:
+        verbose_name = "Message"
+        verbose_name_plural = "Messages"
+
+    def __str__(self):
+        return self.fname
