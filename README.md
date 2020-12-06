@@ -1,5 +1,5 @@
 # Med Innovate 
-## Hosted <a target="_" href="https://med.awebisam.com">Here</a> 
+## Hosted <a target="blank" href="https://med.awebisam.com">Here</a> 
 
 ## Introduction
 
