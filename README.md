@@ -3,7 +3,7 @@
 
 ## Introduction
 
-> Connecting general public with doctors.
+> A practice project of connecting general public with doctors.
 > If you like the idea, feel free to fork and contribute or just clone and use in your own way. 😀
 
 ### Steps to contribute in this project as follows
